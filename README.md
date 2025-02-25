@@ -1,41 +1,42 @@
 # User Management API
 
-This is a RESTful API built with Node.js, Express.js, MySQL, Redis, and JWT. It provides basic CRUD (Create, Read, Update, Delete) operations for managing users with role-based access control.
+This is a RESTful API built with **Node.js, Express.js, MySQL, Redis, and JWT**. It provides basic **CRUD (Create, Read, Update, Delete)** operations for managing users with **role-based access control (RBAC)**.
 
-## Features:
-- JWT Authentication
-- Role-based Access Control (RBAC)
-- MySQL database with schema migrations
-- API Caching with Redis
-- Custom Error Handling
-- Data Validation with Joi
-- Unit Testing with Mocha
-- Docker Containerization
-- API Versioning
+## Features
+- ✅ JWT Authentication
+- ✅ Role-based Access Control (RBAC)
+- ✅ MySQL database with schema migrations
+- ✅ API Caching with Redis
+- ✅ Custom Error Handling
+- ✅ Data Validation with Joi
+- ✅ Unit Testing with Mocha
+- ✅ Docker Containerization
+- ✅ API Versioning
 
-## Prerequisites:
-- Node.js (v16 or later)
-- MySQL (v5.7 or later)
-- Redis (v6 or later)
+## Prerequisites
 
-## Setup Instructions:
+Ensure you have the following installed:
 
-### 1. Clone the repository:
-```bash
+- **Node.js** (v16 or later)
+- **MySQL** (v5.7 or later)
+- **Redis** (v6 or later)
+
+## Setup Instructions
+
+### 1️⃣ Clone the Repository
+```
 git clone https://github.com/your-username/user-management-api.git
 cd user-management-api
-2. Set up MySQL:
-Create a database named user_management:
+```
 
-sql
-Copy
-Edit
+### 2️⃣ Set Up MySQL
+Create a database named `user_management`:
+```
 CREATE DATABASE user_management;
-Create a .env file in the root directory with the following environment variables:
+```
 
-bash
-Copy
-Edit
+Create a `.env` file in the root directory with the following environment variables:
+```
 MYSQL_HOST=localhost
 MYSQL_USER=root
 MYSQL_PASSWORD=password
@@ -43,85 +44,88 @@ MYSQL_DB=user_management
 JWT_SECRET=your_jwt_secret
 REDIS_HOST=localhost
 REDIS_PORT=6379
-3. Run Database Migrations:
-Run migration scripts to create the necessary tables.
+```
 
-bash
-Copy
-Edit
+### 3️⃣ Run Database Migrations
+Run the migration script to create the necessary tables:
+```
 node migrations/create-users-table.js
-4. Seed the Database (optional):
-You can seed the database with some initial data using the following command:
+```
 
-bash
-Copy
-Edit
+### 4️⃣ Seed the Database (Optional)
+Seed the database with initial data:
+```
 node scripts/seed.js
-These commands will set up the database schema and populate initial data. Be sure to test your migrations by checking if the users table is created and populated after running these scripts.
+```
 
-5. Run the API:
+### 5️⃣ Run the API
 Start the server locally:
-
-bash
-Copy
-Edit
+```
 npm start
-The API will be available at http://localhost:3000.
+```
+The API will be available at [http://localhost:3000](http://localhost:3000).
 
-6. Docker Setup:
-To run the application with Docker, use the following command:
-
-bash
-Copy
-Edit
+### 6️⃣ Docker Setup (Optional)
+To run the application with Docker:
+```
 docker-compose up --build
-This will start the Node.js app, MySQL database, and Redis cache in Docker containers.
+```
+This will start the **Node.js app, MySQL database, and Redis cache** in Docker containers.
 
-7. Running Tests:
-To run the unit tests with Mocha:
-
-bash
-Copy
-Edit
+### 7️⃣ Running Tests
+To run unit tests with Mocha:
+```
 npm test
-8. API Documentation:
-You can access the Swagger API documentation at http://localhost:3000/api-docs (if Swagger is set up in the project).
+```
 
-API Endpoints:
-POST /users: Create a new user (Admin only).
-GET /users: Retrieve all users.
-GET /users/:id: Retrieve a single user by ID.
-PUT /users/:id: Update a user (Admin only).
-DELETE /users/:id: Delete a user (Admin only).
-Design Decisions:
-JWT Authentication: Ensures that only authenticated users can access the API.
-Role-based Access Control: Ensures that only users with the admin role can create, update, or delete users.
-Redis Caching: Reduces database queries for frequently accessed endpoints like GET /users and GET /users/:id.
-Assumptions:
-The API is expected to run in a development environment where MySQL and Redis are available.
-It is assumed that the Docker container is properly configured for local development and production environments.
-Troubleshooting:
-Common Errors:
-Authorization header is missing: If you are getting this error, ensure that your requests include the Authorization header with a valid JWT token.
+### 8️⃣ API Documentation
+If Swagger is set up, access the API documentation at:
+```
+http://localhost:3000/api-docs
+```
+
+## API Endpoints
+
+| Method | Endpoint        | Description                   | Access  |
+|--------|----------------|-------------------------------|---------|
+| POST   | `/users`       | Create a new user            | Admin   |
+| GET    | `/users`       | Retrieve all users           | Public  |
+| GET    | `/users/:id`   | Retrieve a user by ID        | Public  |
+| PUT    | `/users/:id`   | Update a user                | Admin   |
+| DELETE | `/users/:id`   | Delete a user                | Admin   |
+
+## Design Decisions
+
+- **JWT Authentication** → Ensures only authenticated users can access the API.
+- **Role-based Access Control (RBAC)** → Admin users can create, update, and delete users.
+- **Redis Caching** → Optimizes performance for `GET /users` and `GET /users/:id`.
+
+## Troubleshooting
+
+### Common Errors & Fixes
+
+🔴 **Error:** `Authorization header is missing`
+
+✅ **Fix:** Ensure that your requests include the `Authorization` header with a valid JWT token.
 
 Example:
+```
+curl -X GET http://localhost:3000/api/v1/users \  
+     -H "Authorization: Bearer your_jwt_token"
+```
 
-bash
-Copy
-Edit
-curl -X GET http://localhost:3000/api/v1/users \
--H "Authorization: Bearer your_jwt_token"
-9. Running Migrations and Seed Data:
-To run migrations and seed data, you can create simple scripts as mentioned earlier. To apply the migration:
+### Running Migrations & Seeding Data
 
-bash
-Copy
-Edit
+To apply migrations:
+```
 node migrations/create-users-table.js
-To seed data, run:
+```
 
-bash
-Copy
-Edit
+To seed data:
+```
 node scripts/seed.js
-These commands will set up the database schema and populate initial data. Be sure to test your migrations by checking if the users table is created and populated after running these scripts.
+```
+
+📌 Be sure to check if the **users** table is created and populated correctly after running these scripts.
+
+---
